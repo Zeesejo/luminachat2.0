@@ -24,6 +24,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
   bool _biometricEnabled = false;
   bool _onlineStatusVisible = true;
   bool _readReceiptsEnabled = true;
+  bool _voiceMessagesEnabled = true;
+  bool _autoDownloadMedia = true;
   double _maxDistance = 50.0;
   String _appVersion = '';
 
@@ -274,6 +276,47 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   ),
                 ],
               ).animate(delay: 400.ms).slideX(
+                begin: -0.3,
+                duration: 600.ms,
+                curve: Curves.easeOut,
+              ).fadeIn(),
+              
+              // Appearance Section
+              _buildSection(
+                title: 'Appearance',
+                children: [
+                  _buildSwitchTile(
+                    icon: Icons.dark_mode_outlined,
+                    title: 'Dark Mode',
+                    subtitle: 'Switch to dark theme for better night viewing',
+                    value: ref.watch(themeProvider),
+                    onChanged: (value) {
+                      ref.read(themeProvider.notifier).state = value;
+                      // TODO: Save to SharedPreferences
+                    },
+                  ),
+                  _buildSwitchTile(
+                    icon: Icons.mic_outlined,
+                    title: 'Voice Messages',
+                    subtitle: 'Enable sending voice messages',
+                    value: _voiceMessagesEnabled,
+                    onChanged: (value) {
+                      setState(() => _voiceMessagesEnabled = value);
+                      // TODO: Save to preferences
+                    },
+                  ),
+                  _buildSwitchTile(
+                    icon: Icons.download_outlined,
+                    title: 'Auto-Download Media',
+                    subtitle: 'Automatically download photos and videos',
+                    value: _autoDownloadMedia,
+                    onChanged: (value) {
+                      setState(() => _autoDownloadMedia = value);
+                      // TODO: Save to preferences
+                    },
+                  ),
+                ],
+              ).animate(delay: 500.ms).slideX(
                 begin: -0.3,
                 duration: 600.ms,
                 curve: Curves.easeOut,
