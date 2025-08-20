@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "722221425439",
+    "project_id": "lumina-chat-app-36597",
+    "storage_bucket": "lumina-chat-app-36597.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:722221425439:android:cba82a236d5dbfc03b062a",
+        "android_client_info": {
+          "package_name": "com.lumina.luminachat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "722221425439-dsea53tqe8q4rnnhio1dcjil2iadpe5p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lumina.luminachat",
+            "certificate_hash": "6aa02d576df25ab0285059fcfda124891644b7da"
+          }
+        },
+        {
+          "client_id": "722221425439-u8peajgu72cuq8ih6b9ui8acutqp9esu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlEWIeB5tEDZUPI7i7Hbyaf-F081_zsXc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "722221425439-u8peajgu72cuq8ih6b9ui8acutqp9esu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

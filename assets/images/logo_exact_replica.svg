@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradient for first chat bubble (cyan to blue) -->
+    <linearGradient id="bubble1Gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#0099CC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4A90E2;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Gradient for second chat bubble (blue to purple) -->
+    <linearGradient id="bubble2Gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8A2BE2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9A4CFF;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Text gradient -->
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#CCCCCC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E8E8E8;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="600" fill="#F5F5F5"/>
+  
+  <!-- First Chat Bubble (Left/Back - Cyan) -->
+  <g transform="translate(200, 150)">
+    <!-- Main bubble body -->
+    <rect x="0" y="0" width="200" height="140" rx="35" ry="35" 
+          fill="url(#bubble1Gradient)" stroke="none"/>
+    
+    <!-- Bubble tail -->
+    <path d="M 40 140 L 25 180 L 70 140 Z" 
+          fill="url(#bubble1Gradient)"/>
+    
+    <!-- Person icon inside first bubble -->
+    <g transform="translate(100, 70)" fill="white">
+      <!-- Head circle -->
+      <circle cx="0" cy="-20" r="18" fill="white"/>
+      <!-- Body arc -->
+      <path d="M -25 15 Q -25 -5 -15 -10 Q 0 -15 15 -10 Q 25 -5 25 15" 
+            stroke="white" stroke-width="8" fill="none" stroke-linecap="round"/>
+    </g>
+  </g>
+  
+  <!-- Second Chat Bubble (Right/Front - Purple) -->
+  <g transform="translate(320, 100)">
+    <!-- Main bubble body -->
+    <rect x="0" y="0" width="200" height="140" rx="35" ry="35" 
+          fill="url(#bubble2Gradient)" stroke="none"/>
+    
+    <!-- Bubble tail -->
+    <path d="M 160 140 L 175 180 L 130 140 Z" 
+          fill="url(#bubble2Gradient)"/>
+    
+    <!-- Person icon inside second bubble -->
+    <g transform="translate(100, 70)" fill="white">
+      <!-- Head circle -->
+      <circle cx="0" cy="-20" r="18" fill="white"/>
+      <!-- Body arc -->
+      <path d="M -25 15 Q -25 -5 -15 -10 Q 0 -15 15 -10 Q 25 -5 25 15" 
+            stroke="white" stroke-width="8" fill="none" stroke-linecap="round"/>
+    </g>
+  </g>
+  
+  <!-- Connection element between bubbles (subtle overlap effect) -->
+  <g transform="translate(380, 175)">
+    <circle cx="0" cy="0" r="25" fill="url(#bubble1Gradient)" opacity="0.7"/>
+    <circle cx="5" cy="5" r="20" fill="url(#bubble2Gradient)" opacity="0.8"/>
+  </g>
+  
+  <!-- "Luminachat" text -->
+  <text x="400" y="450" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="300" 
+        fill="url(#textGradient)" text-anchor="middle" letter-spacing="2">Luminachat</text>
+</svg>

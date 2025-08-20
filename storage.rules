@@ -1,0 +1,37 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function authed() { return request.auth != null; }
+
+    // Allow uploads by authenticated users; tighten to participants in server-side rules if needed
+    match /chat_images/{chatId}/{fileName} {
+      allow read: if authed();
+      allow write: if authed();
+    }
+
+    match /voice_messages/{chatId}/{fileName} {
+      allow read: if authed();
+      allow write: if authed();
+    }
+
+    match /chat_files/{chatId}/{fileName} {
+      allow read: if authed();
+      allow write: if authed();
+    }
+
+    // Profile images - allow authenticated users to manage their own profile images
+    match /profile_images/{userId}/{fileName} {
+      allow read, write: if authed() && request.auth.uid == userId;
+    }
+    
+    // Temporary: Allow any authenticated user to upload to root for testing
+    match /{fileName} {
+      allow read, write: if authed();
+    }
+
+    // Fallback deny
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

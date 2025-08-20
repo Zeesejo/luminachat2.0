@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="320" height="120" viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradient for main circle -->
+    <radialGradient id="mainGradient" cx="0.3" cy="0.3" r="0.8">
+      <stop offset="0%" style="stop-color:#6BB6FF;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#4A90E2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2E5BBA;stop-opacity:1" />
+    </radialGradient>
+    
+    <!-- Gradient for chat bubble -->
+    <linearGradient id="bubbleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.95" />
+      <stop offset="100%" style="stop-color:#F8FAFE;stop-opacity:0.9" />
+    </linearGradient>
+    
+    <!-- Text gradient -->
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2E5BBA;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Glow effect -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Drop shadow -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  
+  <!-- Logo Icon (scaled down) -->
+  <g transform="translate(60, 60) scale(0.6)">
+    <!-- Outer glow ring -->
+    <circle cx="0" cy="0" r="45" fill="none" stroke="#4A90E2" stroke-width="1" opacity="0.3"/>
+    
+    <!-- Main background circle -->
+    <circle cx="0" cy="0" r="38" fill="url(#mainGradient)" filter="url(#shadow)"/>
+    
+    <!-- Chat bubble shape -->
+    <g transform="translate(0, -8)">
+      <!-- Main bubble body -->
+      <rect x="-18" y="-12" width="36" height="22" rx="6" ry="6" 
+            fill="url(#bubbleGradient)" filter="url(#glow)"/>
+      
+      <!-- Bubble tail -->
+      <path d="M -10 10 L -12 18 L -5 12 Z" 
+            fill="url(#bubbleGradient)" filter="url(#glow)"/>
+      
+      <!-- AI neural network dots inside bubble -->
+      <g opacity="0.8">
+        <!-- Connection lines -->
+        <g stroke="#4A90E2" stroke-width="1" opacity="0.4">
+          <line x1="-10" y1="-4" x2="0" y2="-4"/>
+          <line x1="0" y1="-4" x2="10" y2="-4"/>
+          <line x1="-5" y1="4" x2="5" y2="4"/>
+        </g>
+        
+        <!-- Neural nodes -->
+        <circle cx="-10" cy="-4" r="2" fill="#4A90E2"/>
+        <circle cx="0" cy="-4" r="2" fill="#4A90E2"/>
+        <circle cx="10" cy="-4" r="2" fill="#4A90E2"/>
+        <circle cx="-5" cy="4" r="2" fill="#6BB6FF"/>
+        <circle cx="5" cy="4" r="2" fill="#6BB6FF"/>
+        
+        <!-- Inner white dots -->
+        <circle cx="-10" cy="-4" r="1" fill="white" opacity="0.9"/>
+        <circle cx="0" cy="-4" r="1" fill="white" opacity="0.9"/>
+        <circle cx="10" cy="-4" r="1" fill="white" opacity="0.9"/>
+        <circle cx="-5" cy="4" r="1" fill="white" opacity="0.9"/>
+        <circle cx="5" cy="4" r="1" fill="white" opacity="0.9"/>
+      </g>
+    </g>
+    
+    <!-- Highlight -->
+    <ellipse cx="-8" cy="-15" rx="12" ry="18" fill="white" opacity="0.1"/>
+  </g>
+  
+  <!-- LumiChat Text -->
+  <g transform="translate(130, 60)">
+    <!-- Main text -->
+    <text x="0" y="8" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="600" 
+          fill="url(#textGradient)" filter="url(#shadow)">LumiChat</text>
+    
+    <!-- Subtle tagline -->
+    <text x="2" y="28" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="400" 
+          fill="#6B7280" opacity="0.8">AI-Powered Connections</text>
+  </g>
+  
+  <!-- Decorative elements -->
+  <g opacity="0.4">
+    <circle cx="280" cy="30" r="1" fill="#4A90E2">
+      <animate attributeName="opacity" values="0.2;0.8;0.2" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="300" cy="90" r="1.5" fill="#6BB6FF">
+      <animate attributeName="opacity" values="0.3;0.9;0.3" dur="2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+</svg>

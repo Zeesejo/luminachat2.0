@@ -1,0 +1,98 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helpers
+    function authed() { return request.auth != null; }
+    function isChatParticipant(chatId) {
+      return authed() &&
+        (request.auth.uid in get(/databases/$(database)/documents/chats/$(chatId)).data.participants);
+    }
+
+    // Users
+    match /users/{uid} {
+      // Allow creation if authenticated and the UID matches the document ID
+      allow create: if authed() && request.auth.uid == uid;
+      // Allow reading your own document, or other users if discoverable
+      allow read: if authed() && (request.auth.uid == uid || resource.data.isDiscoverable == true);
+      // Allow owner to update and delete their own document
+      allow update, delete: if authed() && request.auth.uid == uid;
+    }
+
+    // Matches
+    match /matches/{id} {
+      // Allow creation if authenticated and the creating user is a participant
+      allow create: if authed() && (request.auth.uid in request.resource.data.participants);
+      // Allow read/write if authenticated and a participant in the existing document
+      allow read, write: if authed() && (request.auth.uid in resource.data.participants);
+    }
+
+    // Usernames mapping: { docId: username (lowercase) } => { uid, createdAt }
+    match /usernames/{username} {
+      // Allow any signed-in user to read username mappings (resolve @username to uid)
+      allow get, list: if authed();
+      // Allow reservation only if not taken and reserving for self
+      allow create: if authed() &&
+        request.resource.data.keys().hasOnly(['uid','createdAt']) &&
+        request.resource.data.uid == request.auth.uid &&
+        !exists(/databases/$(database)/documents/usernames/$(username));
+      // Disallow updates and deletes by default (rename via new reservation)
+      allow update, delete: if false;
+    }
+
+    // Likes
+    match /likes/{id} {
+      // Allow creation if authenticated and the 'fromUserId' matches the current user's UID
+      allow create: if authed() && request.resource.data.fromUserId == request.auth.uid;
+      // No one can read the 'likes' documents directly
+      allow read: if false;
+    }
+
+    // Passes
+    match /passes/{id} {
+      // Allow creation if authenticated and the 'fromUserId' matches the current user's UID
+      allow create: if authed() && request.resource.data.fromUserId == request.auth.uid;
+      // No one can read the 'passes' documents directly
+      allow read: if false;
+    }
+
+    // Chats and messages
+    match /chats/{chatId} {
+      // Create a new direct chat only when the creator is part of participants
+      allow create: if authed() &&
+        (request.resource.data.participants is list) &&
+        (request.auth.uid in request.resource.data.participants);
+
+  // Read/update/delete only for participants
+  allow read, update, delete: if authed() && (request.auth.uid in resource.data.participants);
+
+      // Messages subcollection
+      match /messages/{messageId} {
+        // Read/write only for chat participants
+        allow read, create, update, delete: if isChatParticipant(chatId);
+      }
+    }
+
+    // Typing indicators collection; requires doc to contain chatId and userId fields
+    match /typing_indicators/{docId} {
+      function indicatorData() {
+        return resource.data.keys().hasAll(['chatId', 'userId']) ? resource.data : request.resource.data;
+      }
+      // Any participant can read; rely on chat doc participants
+      allow read: if authed() && (
+        indicatorData().keys().hasAll(['chatId']) &&
+        (request.auth.uid in get(/databases/$(database)/documents/chats/$(indicatorData().chatId)).data.participants)
+      );
+      // Only the owner can create/update/delete their typing doc, and must be a participant
+      allow create, update, delete: if authed() && (
+        indicatorData().keys().hasAll(['chatId','userId']) &&
+        request.auth.uid == indicatorData().userId &&
+        (request.auth.uid in get(/databases/$(database)/documents/chats/$(indicatorData().chatId)).data.participants)
+      );
+    }
+
+    // Essential: Deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
